@@ -6,10 +6,15 @@ library(tidyverse)
 superstore<-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
 
 #logical functions
-# CASE
-#classifying profit (share an example including resulting computations)
+#CASE  function
+#using case function to classify profit as (Profitable, Unprofitable, or Zero)
 
-
+superstore<-superstore%>%
+  mutate(class =case_when(
+  Profit>0 ~ "Profitable",
+  Profit<0 ~ "Unprofitable",
+  TRUE ~ "Zero"
+))
 
 # IF_ELSE
 
