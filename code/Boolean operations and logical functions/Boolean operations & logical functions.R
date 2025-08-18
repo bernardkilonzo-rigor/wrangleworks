@@ -16,7 +16,21 @@ superstore<-superstore%>%
   TRUE ~ "Zero"
 ))
 
-# IF_ELSE
+#computing orders by class
+
+
+#IF_ELSE function
+#using if-else  function to classify profit as (unprofitable, profitable, highly profitable and super profitable)
+
+superstore<-superstore%>%
+  mutate(class_cal =
+           if_else(Profit >= 1000, "Super  Profitable",
+           if_else(Profit >= 150, "Highly Profitable",
+           if_else(Profit >= 0, "Profitable",
+           if_else(is.na(Profit), "Missing","Unprofitable"
+  )))))
+
+# computing orders by new class
 
 
 # IIF
