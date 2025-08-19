@@ -61,17 +61,6 @@ superstore<-superstore%>%
 superstore%>%group_by(New_Region)%>%
   summarise(n =n_distinct(Row.ID))
 
-# IFNULL
 
 
 
-# ISDATE
-
-
-# ISNULL
-
-
-# IN
-
-
-# ZN
