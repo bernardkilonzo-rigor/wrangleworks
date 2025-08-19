@@ -51,6 +51,16 @@ superstore<-superstore%>%
 superstore%>%group_by(if_or)%>%
   summarise(n = n_distinct(Row.ID))
 
+#IN (%in%)
+
+superstore<-superstore%>%
+  mutate(New_Region =
+           if_else(Region %in% c("South","Central"), "Coastal Region",
+                   Region))
+
+superstore%>%group_by(New_Region)%>%
+  summarise(n =n_distinct(Row.ID))
+
 # IFNULL
 
 
