@@ -44,6 +44,12 @@ superstore%>%group_by(if_and)%>%
 
 # IF & OR
 
+superstore<-superstore%>%
+  mutate(if_or = 
+           if_else(Profit > 1000 | Sales > 1000, "High Value","Others"))
+
+superstore%>%group_by(if_or)%>%
+  summarise(n = n_distinct(Row.ID))
 
 # IFNULL
 
