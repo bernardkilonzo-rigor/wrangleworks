@@ -4,7 +4,7 @@ library(tidyverse)
 
 #load data
 superstore<-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
-
+view(superstore)
 #logical functions
 #CASE  function
 #using case function to classify profit as (Profitable, Unprofitable, or Zero)
@@ -30,17 +30,19 @@ superstore<-superstore%>%
            if_else(is.na(Profit), "Missing","Unprofitable"
   )))))
 
-# computing orders by new class
+# IF & AND
 
+superstore<-superstore%>%
+  mutate(if_and = 
+           if_else(class == "Profitable" & Sales > 1000, "Green Light",
+           if_else(class == "Unprofitable" & Sales > 1000, "Red Light",
+           if_else(class == "Zero" & Sales >1000, "Yellow Light", "Others"
+  ))))
 
-# IIF
+superstore%>%group_by(if_and)%>%
+  summarise(n = n_distinct(Row.ID))
 
-
-# AND
-
-
-
-# OR
+# IF & OR
 
 
 # IFNULL
