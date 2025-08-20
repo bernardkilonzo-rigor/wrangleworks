@@ -1,13 +1,12 @@
-setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Boolean operations and logical functions")
 #load libraries
 library(tidyverse)
 
-#load data
+#load data set
 superstore<-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
 view(superstore)
-#logical functions
-#CASE  function
-#using case function to classify profit as (Profitable, Unprofitable, or Zero)
+#boolean operations & logical functions
+#1 CASE function
+#using case function to categorize profit as (Profitable, Unprofitable, or Zero)
 
 superstore<-superstore%>%
   mutate(class =case_when(
@@ -16,22 +15,19 @@ superstore<-superstore%>%
   TRUE ~ "Zero"
 ))
 
-#computing orders by class
-
-
-#IF_ELSE function
-#using if-else  function to classify profit as (unprofitable, profitable, highly profitable and super profitable)
+#2 IF_ELSE function
+#using if-else function to categorize profit as (unprofitable, profitable, highly profitable and super profitable)
 
 superstore<-superstore%>%
   mutate(class_cal =
-           if_else(Profit >= 1000, "Super  Profitable",
+           if_else(Profit >= 1000, "Super Profitable",
            if_else(Profit >= 150, "Highly Profitable",
            if_else(Profit >= 0, "Profitable",
            if_else(is.na(Profit), "Missing","Unprofitable"
   )))))
 
-# IF & AND
-
+#3 IF AND function
+#using IF AND function to categorize orders based on Profit and Sales values.
 superstore<-superstore%>%
   mutate(if_and = 
            if_else(class == "Profitable" & Sales > 1000, "Green Light",
@@ -39,27 +35,19 @@ superstore<-superstore%>%
            if_else(class == "Zero" & Sales >1000, "Yellow Light", "Others"
   ))))
 
-superstore%>%group_by(if_and)%>%
-  summarise(n = n_distinct(Row.ID))
-
-# IF & OR
+#4 IF OR functions
+#using IF OR function to categorize orders based on Profit and Sales values. 
 
 superstore<-superstore%>%
   mutate(if_or = 
            if_else(Profit > 1000 | Sales > 1000, "High Value","Others"))
 
-superstore%>%group_by(if_or)%>%
-  summarise(n = n_distinct(Row.ID))
-
-#IN (%in%)
-
+#5 IN (%in%)
+#using %in% function to group the South and Central regions into a new region called "Coastal Region"
 superstore<-superstore%>%
   mutate(New_Region =
            if_else(Region %in% c("South","Central"), "Coastal Region",
                    Region))
-
-superstore%>%group_by(New_Region)%>%
-  summarise(n =n_distinct(Row.ID))
 
 
 
