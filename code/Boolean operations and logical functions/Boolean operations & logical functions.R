@@ -3,7 +3,7 @@ library(tidyverse)
 
 #load data set
 superstore<-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
-view(superstore)
+
 #boolean operations & logical functions
 #1 CASE function
 #using case function to categorize profit as (Profitable, Unprofitable, or Zero)
