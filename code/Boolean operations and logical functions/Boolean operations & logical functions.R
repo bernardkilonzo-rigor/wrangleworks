@@ -16,7 +16,7 @@ superstore<-superstore%>%
 ))
 
 #2 IF_ELSE function
-#using if-else function to categorize profit as (unprofitable, profitable, highly profitable and super profitable)
+#using if-else function to categorize profit as (Unprofitable, Profitable, Highly Profitable and Super Profitable)
 
 superstore<-superstore%>%
   mutate(class_cal =
