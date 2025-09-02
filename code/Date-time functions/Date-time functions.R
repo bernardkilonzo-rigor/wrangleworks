@@ -93,4 +93,12 @@ superstore<-superstore%>%
   mutate(mon = month(Order.Date, label = TRUE))
 
 
-#8.
+#8.Creating a date sequence
+#the function below creates a sequence between the two dates
+seq(dmy(01012021),dmy(31122024),by ="days")
+
+
+#9.Working with time zones
+#Converting my timezone to EST and UTC zones respectively
+with_tz(now(), tzone = "EST")
+with_tz(now(), tzone = "UTC")
