@@ -1,11 +1,12 @@
 setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Date-time functions")
 #load libraries
-library(lubridate)
+library(tidyverse)
 
 #load data
 superstore<-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
 View(superstore)
 #Date and time functions in R
+
 
 #1.Converting dates from other formats
 
@@ -14,6 +15,7 @@ superstore$Order.Date<-dmy(superstore$Order.Date)
 
 #converting Ship Date to a date object
 superstore$Ship.Date<-as.Date(superstore$Ship.Date, format = "%d/%m/%Y")
+
 
 #2.Computing the current date and time
 
@@ -24,6 +26,7 @@ now()
 Sys.Date()
 Sys.time()
 
+
 #3 Extracting date components
 
 #extracting the year, month, and day components from the Order Date
@@ -32,4 +35,38 @@ month(superstore$Order.Date) #extracting months
 day(superstore$Order.Date) #extracting days
 
 
+#4.Adding/subtracting time units
 
+#adding 1 year to the Order Date
+superstore<-superstore%>%
+  mutate(date_year = Order.Date+years(1))
+  
+#adding 1 month to the Order Date
+superstore<-superstore%>%
+  mutate(date_month = Order.Date+months(1))
+
+#subtracting 3 months from the Order Date
+superstore<-superstore%>%
+  mutate(data_month_3 =Order.Date-months(3))
+
+
+#5.Computing the difference between dates
+
+#computing the difference between Order Date and Ship Date
+superstore<-superstore%>%
+  mutate(difference = Ship.Date-Order.Date)
+
+#computing the difference by specifying the time length
+superstore<-superstore%>%
+  mutate(diffe_2 = time_length(interval(Order.Date,Ship.Date),"month"))
+
+
+#6.Rounding dates to the nearest units
+
+#rounding Order Date to the nearest month
+superstore<-superstore%>%
+  mutate(round_month =round_date(Order.Date,"month"))
+
+#rounding Order Date to the nearest year
+superstore<-superstore%>%
+  mutate(round_year =round_date(Order.Date,"year"))
