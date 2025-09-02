@@ -70,3 +70,27 @@ superstore<-superstore%>%
 #rounding Order Date to the nearest year
 superstore<-superstore%>%
   mutate(round_year =round_date(Order.Date,"year"))
+
+
+#7.Extracting weekdays and months
+
+#extracting weekdays and months as integers
+#extracting weekdays from Order Date
+superstore<-superstore%>%
+  mutate(weekday = wday(Order.Date))
+
+#extracting months from Order Date
+superstore<-superstore%>%
+  mutate(month = month(Order.Date))
+
+#extracting weekdays and months as fcators
+#extracting weekdays from Order Date
+superstore<-superstore%>%
+  mutate(wkday = wday(Order.Date, label = TRUE))
+
+#extracting months from Order Date
+superstore<-superstore%>%
+  mutate(mon = month(Order.Date, label = TRUE))
+
+
+#8.
