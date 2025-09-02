@@ -102,3 +102,14 @@ seq(dmy(01012021),dmy(31122024),by ="days")
 #Converting my timezone to EST and UTC zones respectively
 with_tz(now(), tzone = "EST")
 with_tz(now(), tzone = "UTC")
+
+
+#10.Formatting date outputs
+#different ways of formatting the current date
+format(now(),"%a") #"Tue"
+format(now(),"%A") #"Tuesday"
+format(now(),"%b") #"Sept"
+format(now(),"%B") #"September"
+format(now(),"%b-%Y") #"Sept-2025"
+format(now(),"%b-%y") #"Sept-25"
+format(now(),"%b %d,%Y") #"Sept 02,2025"
