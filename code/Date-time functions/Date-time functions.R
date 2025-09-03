@@ -1,10 +1,9 @@
-setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Date-time functions")
 #load libraries
 library(tidyverse)
 
 #load data
 superstore<-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
-View(superstore)
+
 #Date and time functions in R
 
 
@@ -22,14 +21,14 @@ superstore$Ship.Date<-as.Date(superstore$Ship.Date, format = "%d/%m/%Y")
 #using lubridate now() function
 now()
 
-#using Sys_date or Sys_time() functions
+#using Sys.Date() or Sys.time() functions
 Sys.Date()
 Sys.time()
 
 
-#3 Extracting date components
+#3.Extracting date components
 
-#extracting the year, month, and day components from the Order Date
+#extracting the year, month, and day components from Order Date
 year(superstore$Order.Date) #extracting years
 month(superstore$Order.Date) #extracting months
 day(superstore$Order.Date) #extracting days
@@ -50,13 +49,13 @@ superstore<-superstore%>%
   mutate(data_month_3 =Order.Date-months(3))
 
 
-#5.Computing the difference between dates
+#5.Computing difference between dates
 
-#computing the difference between Order Date and Ship Date
+#computing difference between Order Date and Ship Date
 superstore<-superstore%>%
   mutate(difference = Ship.Date-Order.Date)
 
-#computing the difference by specifying the time length
+#computing difference between Order Date and Ship Date using specific time length
 superstore<-superstore%>%
   mutate(diffe_2 = time_length(interval(Order.Date,Ship.Date),"month"))
 
@@ -77,16 +76,16 @@ superstore<-superstore%>%
 #extracting weekdays and months as integers
 #extracting weekdays from Order Date
 superstore<-superstore%>%
-  mutate(weekday = wday(Order.Date))
+  mutate(weekday = wday(Order.Date, week_start = 1))
 
 #extracting months from Order Date
 superstore<-superstore%>%
   mutate(month = month(Order.Date))
 
-#extracting weekdays and months as fcators
+#extracting weekdays and months as strings
 #extracting weekdays from Order Date
 superstore<-superstore%>%
-  mutate(wkday = wday(Order.Date, label = TRUE))
+  mutate(wkday = wday(Order.Date, label = TRUE, week_start = 1))
 
 #extracting months from Order Date
 superstore<-superstore%>%
@@ -94,22 +93,25 @@ superstore<-superstore%>%
 
 
 #8.Creating a date sequence
+
 #the function below creates a sequence between the two dates
 seq(dmy(01012021),dmy(31122024),by ="days")
 
 
 #9.Working with time zones
-#Converting my timezone to EST and UTC zones respectively
+
+#converting my timezone to EST and UTC zones respectively
 with_tz(now(), tzone = "EST")
 with_tz(now(), tzone = "UTC")
 
 
 #10.Formatting date outputs
-#different ways of formatting the current date
-format(now(),"%a") #"Tue"
-format(now(),"%A") #"Tuesday"
-format(now(),"%b") #"Sept"
-format(now(),"%B") #"September"
-format(now(),"%b-%Y") #"Sept-2025"
-format(now(),"%b-%y") #"Sept-25"
-format(now(),"%b %d,%Y") #"Sept 02,2025"
+
+#different ways of formatting the date "02-09-2025"
+format(dmy(02092025),"%a") #"Tue"
+format(dmy(02092025),"%A") #"Tuesday"
+format(dmy(02092025),"%b") #"Sept"
+format(dmy(02092025),"%B") #"September"
+format(dmy(02092025),"%b-%Y") #"Sept-2025"
+format(dmy(02092025),"%b-%y") #"Sept-25"
+format(dmy(02092025),"%b %d,%Y") #"Sept 02,2025"
