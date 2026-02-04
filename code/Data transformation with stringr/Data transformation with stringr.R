@@ -3,13 +3,21 @@ setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Data
 library(stringr)
 
 #1.Cleaning and standardizing text
-#whitespace and formatting
-
-
+#white space and formatting
+#trim spaces
+x<- "Rigor Data  Solutions "
+str_trim(x) #trims both sides
+str_trim(x, side = "left") #trim leading spaces
+str_trim(x, side = "right") #trim trailing spaces
+str_replace_all(x, "\\s+","") #removes all white spaces
+str_squish(x) #collapses multiple spaces into one
 
 #case transformations
 
-
+str_to_lower(x) #lowercase
+str_to_upper(x) #uppercase
+str_to_title(x) #title case
+str_to_sentence(x) #sentence case
 
 #character normalization
 
