@@ -42,9 +42,26 @@ superstore%>%filter(str_starts(Customer.Name,"El"))  #filters names starting wit
 superstore%>%filter(str_ends(Customer.Name,"cio")) #filters names ending with "cio"
 superstore%>%filter(!str_detect(Category,"Technology")) #excludes technology category
 
-
 #validating inputs
+z<- tibble(
+  password =c(
+    "Zorigor2025",
+    "bernard3012",
+    "Rigordata2020",
+    "Bensolutions2012",
+    "Ben2021",
+    "Kenrastli2020"
+  )
+)
 
+validate_password <- function(z) {
+  has_upper <- str_detect(z, "[A-Z]")
+  has_lower <- str_detect(z, "[a-z]")
+  has_digit <- str_detect(z, "\\d")
+  long_enough <- str_length(z) >= 8
+  
+  has_upper && has_lower && has_digit && long_enough
+}
 
 #3.Extracting and splitting text
 #extracting
