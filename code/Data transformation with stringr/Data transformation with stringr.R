@@ -1,6 +1,10 @@
 setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Data transformation with stringr")
 #load libraries
 library(stringr)
+library(dplyr)
+
+#loading sample dataset
+superstore <-read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
 
 #1.Cleaning and standardizing text
 #white space and formatting
@@ -32,6 +36,11 @@ str_detect(x, "\\s+") #detect white spaces
 str_count(x,"o") #great for counting occurrences.
 
 #filtering rows
+
+superstore%>%filter(str_detect(Product.Name,"Xerox")) #filters "Xerox" products
+superstore%>%filter(str_starts(Customer.Name,"El"))  #filters names starting with "El"
+superstore%>%filter(str_ends(Customer.Name,"cio")) #filters names ending with "cio"
+superstore%>%filter(!str_detect(Category,"Technology")) #excludes technology category
 
 
 #validating inputs
