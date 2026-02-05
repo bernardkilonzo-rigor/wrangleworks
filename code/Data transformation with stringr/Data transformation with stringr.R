@@ -19,13 +19,17 @@ str_to_upper(x) #uppercase
 str_to_title(x) #title case
 str_to_sentence(x) #sentence case
 
-#character normalization
-
-
 #2.Pattern detection and filtering
 #detecting patterns
+y <-c("abc@fun.org", "abc.com", "abc@gmail.com")
 
-
+str_detect(x, "Data") #detect simple sub strings
+str_detect(x, regex("DATA", ignore_case = TRUE)) #detect case‑insensitively
+str_detect(y, "@.+\\.") #Checks for “@something.” a crude email pattern
+str_detect(x, "\\d+") #detect digits
+str_detect(x, "\\w+") #detect word characters
+str_detect(x, "\\s+") #detect white spaces
+str_count(x,"o") #great for counting occurrences.
 
 #filtering rows
 
