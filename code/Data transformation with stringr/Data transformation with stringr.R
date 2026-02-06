@@ -66,7 +66,8 @@ validate_password <- function(z) {
 #3.Extracting and splitting text
 #extracting
 
-
+superstore%>%str_split(Customer.Name,"\\s+")
+superstore%>%str_split_fixed(Order.ID,"-",3)
 
 #splitting
 
