@@ -66,12 +66,12 @@ validate_password <- function(z) {
 #3.Extracting and splitting text
 #extracting
 
-superstore%>%str_split(Customer.Name,"\\s+")
-superstore%>%str_split_fixed(Order.ID,"-",3)
+
 
 #splitting
 
-
+str_split(superstore$Customer.Name,"\\s+") #splits text on white space
+str_split_fixed(superstore$Order.ID,"-",3) #splits text into a fixed number of parts
 
 #tokenization (lightweight NLP)
 
