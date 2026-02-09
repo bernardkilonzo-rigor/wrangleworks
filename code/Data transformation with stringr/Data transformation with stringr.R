@@ -92,7 +92,9 @@ str_sub("Rigor1234",-4,-1) #extracting text by position
 #splitting
 
 str_split(superstore$Customer.Name,"\\s+") #splits text on white space
+str_split("Rigor,Data,Solutions", ",") #splits text on comma
 str_split_fixed(superstore$Order.ID,"-",3) #splits text into a fixed number of parts
+
 
 #tokenization (lightweight NLP)
 
