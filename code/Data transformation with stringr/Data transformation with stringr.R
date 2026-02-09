@@ -84,8 +84,10 @@ superstore<-superstore%>%mutate(Xerox_products = str_detect(Product.Name,"Xerox"
 
 #3.Extracting and splitting text
 #extracting
-
-
+str_extract("Bernard Kilonzo", "^[^ ]+") #extracts  first name
+str_extract("Bernard Kilonzo", "[^ ]+$") #extracts last name
+str_sub("Rigordatasolutions",1,5) #extracting text by position
+str_sub("Rigor1234",-4,-1) #extracting text by position
 
 #splitting
 
