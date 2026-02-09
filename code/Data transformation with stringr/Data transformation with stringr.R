@@ -43,6 +43,7 @@ superstore%>%filter(str_ends(Customer.Name,"cio")) #filters names ending with "c
 superstore%>%filter(!str_detect(Category,"Technology")) #excludes technology category
 
 #validating inputs
+#validating passwords
 z<- tibble(
   password =c(
     "Zorigor2025",
@@ -60,8 +61,26 @@ validate_password <- function(z) {
   has_digit <- str_detect(z, "\\d")
   long_enough <- str_length(z) >= 8
   
-  has_upper && has_lower && has_digit && long_enough
+  has_upper & has_lower & has_digit & long_enough
 }
+z%>%mutate(valid_pasword = validate_password(password))
+
+#email validation
+is_valid_email <-function(x){
+  str_detect(x, "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
+}
+is_valid_email("benkilonzo@gmail.com")
+is_valid_email("rigordatasolutions.com")
+
+#phone validation
+is_valid_ke_contact <- function(x){
+  str_detect(x, "^(\\+254|0)7[0-9]{8}$")
+}
+is_valid_ke_contact("+254713567549")
+is_valid_email("+2745362178")
+
+#validating if product name contains certain pattern
+superstore<-superstore%>%mutate(Xerox_products = str_detect(Product.Name,"Xerox"))
 
 #3.Extracting and splitting text
 #extracting
