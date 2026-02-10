@@ -110,7 +110,15 @@ str_replace_all("Doe, John", "([^,]+),\\s*(.+)", "\\2 \\1") #swap word order
 str_replace_all("Card: 4111-5678-9999-0000", "\\d", "X") #masking sensitive data
 
 #dynamic replacement
-
+text_1 <- "A chair costs $50 and a table costs $100."
+str_replace_all(
+  text_1,
+  "\\$(\\d+)",
+  function(x) {
+    price <- as.numeric(str_extract(x, "\\d+"))
+    paste0("$", price + 10)
+  }
+) #increases all prices by 10%
 
 #5.String construction and assembly
 #concatenation
