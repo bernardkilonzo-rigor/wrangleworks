@@ -95,13 +95,13 @@ str_split(superstore$Customer.Name,"\\s+") #splits text on white space
 str_split("Rigor,Data,Solutions", ",") #splits text on comma
 str_split_fixed(superstore$Order.ID,"-",3) #splits text into a fixed number of parts
 
-
-#tokenization (lightweight NLP)
-
-
 #4.Replacing and rewriting text
 #simple replacement
-
+text <- "Rigor Data Solutions Offers Data Analysis Solutions"
+str_replace(text, "Solutions", "Services") #replaces first occurrence
+str_replace_all(text, "Solutions", "Services") #replaces all occurrences
+str_remove(text, "Solutions") #similar to replacing first occurrence of "Solutions" with ""
+str_replace_all(text, c("Solutions" ="Services", "Analysis"="Visualization")) #multiple replacement at once
 
 #Regex-driven rewriting
 
