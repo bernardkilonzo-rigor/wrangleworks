@@ -103,9 +103,11 @@ str_replace_all(text, "Solutions", "Services") #replaces all occurrences
 str_remove(text, "Solutions") #similar to replacing first occurrence of "Solutions" with ""
 str_replace_all(text, c("Solutions" ="Services", "Analysis"="Visualization")) #multiple replacement at once
 
-#Regex-driven rewriting
-
-
+#regex-driven rewriting
+txt <- "Rigor    Data Solutions"
+str_replace_all(txt, "\\s+", " ") #normalizing spacing
+str_replace_all("Doe, John", "([^,]+),\\s*(.+)", "\\2 \\1") #swap word order
+str_replace_all("Card: 4111-5678-9999-0000", "\\d", "X") #masking sensitive data
 
 #dynamic replacement
 
