@@ -122,13 +122,19 @@ str_replace_all(
 
 #5.String construction and assembly
 #concatenation
+str_c("Rigor", "Data", "Solutions")
+str_c("Rigor", "Data", "Solutions", sep = " ") #adding separators
 
+#interpolation (lets you embed R expressions directly inside strings using {})
+name <- "Bernard"
+age <- 30
+str_glue("My name is {name} and I am {age} years old.") #inline variable interpolation
 
-#interpolation
-
-
-#joining vectors
-
+df <- data.frame(
+  name = c("Bernard", "Amina"),
+  age  = c(34, 29)
+)
+str_glue_data(df, "{name} is {age} years old.") #interpolate using a data frame
 
 #6.Measuring and summarizing text
 #length and width
