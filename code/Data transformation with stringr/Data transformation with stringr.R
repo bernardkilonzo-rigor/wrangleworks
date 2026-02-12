@@ -137,8 +137,9 @@ df <- data.frame(
 str_glue_data(df, "{name} is {age} years old.") #interpolate using a data frame
 
 #6.Measuring and summarizing text
-#length and width
-
+#measuring length of text
+superstore<-superstore%>%
+  mutate(char_length = str_length(Category)) #computes the number of characters
 
 #summaries
 
