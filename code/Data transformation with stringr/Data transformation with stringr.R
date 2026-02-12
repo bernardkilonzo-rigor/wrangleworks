@@ -142,7 +142,10 @@ superstore<-superstore%>%
   mutate(char_length = str_length(Category)) #computes the number of characters
 
 #summaries
-
+new_text <- "At Rigor Data Solutions, we support you unleash the true power of your data and automate internal processes through modern business intelligence and analytics solutions. Our projects are designed, developed, and deployed by experienced professionals who are tested and certified in their respective fields."
+str_count(new_text, boundary("word")) #count words
+str_count(new_text, "\\d+") # count digits
+str_count(new_text, ",") #count commas
 
 #7.Advanced Regex and Text Engineering
 #lookaheads and lookbehinds
