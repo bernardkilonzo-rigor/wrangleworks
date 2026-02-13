@@ -150,6 +150,10 @@ str_count(new_text, ",") #count commas
 #7.Advanced Regex and Text Engineering
 #lookaheads and lookbehinds
 
+str_split("a, b, c(d,e), f", ",(?![^()]*\\))") #split on commas not inside parentheses
+str_extract("GDP (2024 est.)", "(?<=\\().+?(?=\\))") #extract text inside parentheses
+str_replace("45%", "(?<=\\d)(kg|m|%)$", "") #remove trailing units e.g., "kg","m","%"
+str_replace_all("RigorDataSolutions", "(?=[A-Z])", " ") #insert a space before the capital letters
 
 #boundary matching
 
