@@ -1,4 +1,3 @@
-setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Data transformation with stringr")
 #load libraries
 library(stringr)
 library(dplyr)
@@ -154,9 +153,3 @@ str_split("a, b, c(d,e), f", ",(?![^()]*\\))") #split on commas not inside paren
 str_extract("GDP (2024 est.)", "(?<=\\().+?(?=\\))") #extract text inside parentheses
 str_replace("45%", "(?<=\\d)(kg|m|%)$", "") #remove trailing units e.g., "kg","m","%"
 str_replace_all("RigorDataSolutions", "(?=[A-Z])", " ") #insert a space before the capital letters
-
-#boundary matching
-
-
-#complex parsing
-
