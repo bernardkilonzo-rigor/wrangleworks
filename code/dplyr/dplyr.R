@@ -1,7 +1,6 @@
 setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\dplyr")
 
 #load dplyr library
-install.packages("dplyr")
 library(dplyr)
 
 #load data set
@@ -17,7 +16,7 @@ df <- tibble(
 df%>%filter(!(Status=="Present" & Amount>=1000))
 
 #using filter_out() to drop records where status "present" and Amount>=1000
-df%>%
+df%>%filter_out(Status=="Present", Amount>=1000)
 
 #recode_values() function
 
