@@ -43,6 +43,18 @@ dat %>%
                                    if_else(rating ==4, "Agree",
                                            if_else(rating ==5, "Strongly Agree", "")))))
   )
+#better approach with recode_values()
+dat%>%
+  mutate(
+    rating_name_1 = rating%>%
+      recode_values(
+        1 ~ "Strongly Disagree",
+        2 ~ "Disagree",
+        3 ~ "Neutral",
+        4 ~ "Agree",
+        5 ~ "Strongly Agree"
+      ))
+
 #replace_values() function
 
 
