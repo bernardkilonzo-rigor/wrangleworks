@@ -6,7 +6,7 @@ library(dplyr)
 #load data set
 superstore <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
 
-#filter_out() function
+#1. filter_out() function
 df <- tibble(
   name = c("Ann","Ken","Jack", "Anita", "Alex", "Walter", "Ruth", "Lucy"),
   Status = c("Present", "Absent", "Absent", "Present","Absent","Present","Present", "Absent"),
@@ -18,7 +18,7 @@ df%>%filter(!(Status=="Present" & Amount>=1000))
 #using filter_out() to drop records where status "present" and Amount>=1000
 df%>%filter_out(Status=="Present", Amount>=1000)
 
-#recode_values() function
+#2. recode_values() function
 dat <- tibble(
   rating = c(1,4,5,2,3,4,4,5,1,2,3,3,5,4)
 )
@@ -34,6 +34,15 @@ dat %>%mutate(
   )
 )
 
+#recode values using if_else()
+dat %>%
+  mutate(rating_name = 
+           if_else(rating ==1, "Strongly Disagree",
+                   if_else(rating ==2, "Disagree",
+                           if_else(rating ==3, "Neutral",
+                                   if_else(rating ==4, "Agree",
+                                           if_else(rating ==5, "Strongly Agree", "")))))
+  )
 #replace_values() function
 
 
