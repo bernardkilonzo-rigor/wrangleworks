@@ -71,4 +71,16 @@ dat_1 %>%
     )
   )
 
+# using recode_values to replace values
+dat_1%>%
+  mutate(
+    city_2 = recode_values(
+      city,
+      c("Nrb","Nairobi") ~ "Nairobi",
+      c("New York", "NY") ~ "New York",
+      default = city
+    )
+  )
+
+
 #replace_when() function
