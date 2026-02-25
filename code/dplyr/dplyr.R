@@ -82,5 +82,14 @@ dat_1%>%
     )
   )
 
+# a better approach that does not require you to specify default using replace_values()
+dat_1%>%
+  mutate(
+    city_2 = city %>%
+      replace_values(
+        c("Nrb","Nairobi") ~ "Nairobi",
+        c("New York", "NY") ~ "New York"
+      )
+  )
 
 #replace_when() function
