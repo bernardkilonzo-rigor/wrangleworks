@@ -55,8 +55,20 @@ dat%>%
         5 ~ "Strongly Agree"
       ))
 
-#replace_values() function
+#3. replace_values() function
 
+dat_1 <- tibble(
+  city = c("Nrb","Nairobi","Tokyo", "New York", "NY", "Kampala")
+)
 
+# using case_when to replace values
+dat_1 %>%
+  mutate(
+    city_1 = case_when(
+      city %in% c("Nrb","Nairobi") ~ "Nairobi",
+      city %in% c("New York", "NY") ~ "New York",
+      .default = city
+    )
+  )
 
 #replace_when() function
