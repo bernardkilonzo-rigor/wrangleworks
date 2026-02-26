@@ -1,10 +1,5 @@
-setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\dplyr")
-
 #load dplyr library
 library(dplyr)
-
-#load data set
-superstore <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")
 
 #1. filter_out() function
 df <- tibble(
@@ -93,3 +88,4 @@ dat_1%>%
   )
 
 #replace_when() function
+repla
