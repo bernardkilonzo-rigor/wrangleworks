@@ -88,4 +88,12 @@ dat_1%>%
   )
 
 #replace_when() function
-repla
+dat <- tibble(
+  rating = c(1,4,5,2,3,4,4,5,1,2,3,3,5,4)
+)
+
+dat %>%
+  mutate(
+    rating = replace_when(rating,rating == 1 ~ 6),
+    rating = replace_when(rating,rating == 2 ~ 7)
+    )
