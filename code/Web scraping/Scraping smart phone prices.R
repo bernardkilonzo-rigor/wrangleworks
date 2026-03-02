@@ -11,3 +11,9 @@ url <- "https://www.kilimall.co.ke/category/Top-Brands?id=100000646&form=categor
 
 #read the HTML
 page <- read_html(url)
+
+#extracting fields
+names <- page %>% html_nodes(".product-title")%>%html_text(trim = TRUE)
+
+prices <- page %>% html_nodes(".product-price") %>% html_text(trim = TRUE)%>%
+  str_replace_all("[^0-9]", "") %>% as.numeric()
