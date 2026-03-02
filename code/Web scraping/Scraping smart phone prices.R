@@ -17,3 +17,10 @@ names <- page %>% html_nodes(".product-title")%>%html_text(trim = TRUE)
 
 prices <- page %>% html_nodes(".product-price") %>% html_text(trim = TRUE)%>%
   str_replace_all("[^0-9]", "") %>% as.numeric()
+
+#combine into a data set
+phones <- tibble(
+  name = names,
+  price = prices
+)
+
