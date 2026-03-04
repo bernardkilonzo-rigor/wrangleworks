@@ -24,11 +24,13 @@ reviews <- page %>% html_nodes(".reviews") %>% html_text(trim = TRUE)%>%
 logistics <- page %>% html_nodes(".logistics-tag") %>% html_text(trim = TRUE)%>%
   str_remove_all('"')
 
+mark <- page %>% html_nodes(".preferred-mark") %>% html_text(trim = TRUE)%>%
+  str_remove_all('"')
+
 #combine into a data set
 phones <- tibble(
   name = names,
-  price = prices,
+  price_ksh = prices,
   total_reviews = reviews,
   logistics_tags = logistics
 )
-
