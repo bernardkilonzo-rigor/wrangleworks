@@ -44,10 +44,18 @@ url_2 <- "https://www.jumia.co.ke/catalog/?q=smartphones"
 page_2 <- read_html(url_2)
 
 #extracting the fields
-names <- page_2 %>% html_nodes(".prd._fb .name")%>%html_text(trim = TRUE)
+names <- page_2 %>% html_nodes(".name")%>%html_text(trim = TRUE)
+
+current_price <- page_2 %>% html_nodes(".prc") %>% html_text(trim = TRUE)%>%
+  str_replace_all("[^0-9]", "") %>% as.numeric()
+
+old_price <- page_2 %>% html_nodes(".old") %>% html_text(trim = TRUE)%>%
+  str_replace_all("[^0-9]", "") %>% as.numeric()
 
 
 phones_2<-tibble(
-  name = names
+  name = names,
+  current_price_ksh = current_price,
+  old_price_ksh = old_price
 )
 View(phones_2)
