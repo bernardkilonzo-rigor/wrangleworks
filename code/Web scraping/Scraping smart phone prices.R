@@ -52,10 +52,19 @@ current_price <- page_2 %>% html_nodes(".prc") %>% html_text(trim = TRUE)%>%
 old_price <- page_2 %>% html_nodes(".old") %>% html_text(trim = TRUE)%>%
   str_replace_all("[^0-9]", "") %>% as.numeric()
 
+price_deviation <- page_2 %>% html_nodes("._dsct") %>% html_text(trim = TRUE)%>%
+  str_replace_all("[^0-9]", "") %>% as.numeric()
+
+total_reviews <- page_2 %>% html_nodes(".rev") %>% html_text(trim = TRUE)%>%str_extract("(?<=\\()\\d+(?=\\))")
+
+rating<- page_2 %>% html_nodes(".rev") %>% html_text(trim = TRUE)%>%str_extract("\\d+\\.?\\d*")
 
 phones_2<-tibble(
   name = names,
   current_price_ksh = current_price,
-  old_price_ksh = old_price
+  old_price_ksh = old_price,
+  price_dv =price_deviation,
+  rating = rating,
+  total_reviews = total_reviews
 )
 View(phones_2)
