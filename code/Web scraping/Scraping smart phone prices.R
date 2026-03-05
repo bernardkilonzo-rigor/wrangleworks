@@ -6,6 +6,7 @@ library(stringr) #string handling
 library(purrr) #functional programming and iteration
 library(rvest) #web scraping and HTML extraction
 
+#example_1
 #target page
 url <- "https://www.kilimall.co.ke/category/Top-Brands?id=100000646&form=category&page=1"
 
@@ -34,3 +35,19 @@ phones <- tibble(
   total_reviews = reviews,
   logistics_tags = logistics
 )
+
+#example_2
+#target page
+url_2 <- "https://www.jumia.co.ke/catalog/?q=smartphones"
+
+#read the html
+page_2 <- read_html(url_2)
+
+#extracting the fields
+names <- page_2 %>% html_nodes(".prd._fb .name")%>%html_text(trim = TRUE)
+
+
+phones_2<-tibble(
+  name = names
+)
+View(phones_2)
