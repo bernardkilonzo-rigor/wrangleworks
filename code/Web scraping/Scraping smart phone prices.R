@@ -59,6 +59,7 @@ total_reviews <- page_2 %>% html_nodes(".rev") %>% html_text(trim = TRUE)%>%str_
 
 rating<- page_2 %>% html_nodes(".rev") %>% html_text(trim = TRUE)%>%str_extract("\\d+\\.?\\d*")
 
+#combining extracted fields to create a data set
 phones_2<-tibble(
   name = names,
   current_price_ksh = current_price,
@@ -67,4 +68,3 @@ phones_2<-tibble(
   rating = rating,
   total_reviews = total_reviews
 )
-View(phones_2)
