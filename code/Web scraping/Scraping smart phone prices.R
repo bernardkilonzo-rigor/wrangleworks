@@ -53,7 +53,7 @@ old_price <- page_2 %>% html_nodes(".old") %>% html_text(trim = TRUE)%>%
   str_replace_all("[^0-9]", "") %>% as.numeric()
 
 price_deviation <- page_2 %>% html_nodes("._dsct") %>% html_text(trim = TRUE)%>%
-  str_replace_all("[^0-9]", "") %>% as.numeric()
+  str_replace_all("[^0-9]", "") %>% as.numeric()/100
 
 total_reviews <- page_2 %>% html_nodes(".rev") %>% html_text(trim = TRUE)%>%str_extract("(?<=\\()\\d+(?=\\))")
 
