@@ -36,6 +36,38 @@ phones <- tibble(
   logistics_tags = logistics
 )
 
+#extracting data from multiple pages
+scrape_page <- function(page_num){
+  url <-paste0("https://www.kilimall.co.ke/category/Top-Brands?id=100000646&form=category&page=",page_num)
+  
+  page <- read_html(url)
+  
+  names <- page %>% html_nodes(".product-title")%>%html_text(trim = TRUE)
+    
+  prices <- page %>% html_nodes(".product-price") %>% html_text(trim = TRUE)%>%
+      str_replace_all("[^0-9]", "") %>% as.numeric()
+    
+  reviews <- page %>% html_nodes(".reviews") %>% html_text(trim = TRUE)%>%
+      str_remove_all("[()\\[\\]]") %>% as.numeric()
+  
+  logistics <- page %>% html_nodes(".logistics-tag") %>% html_text(trim = TRUE)%>%
+      str_remove_all('"')
+  
+  mark <- page %>% html_nodes(".preferred-mark") %>% html_text(trim = TRUE)%>%
+      str_remove_all('"')
+  
+  tibble(
+    name = names,
+    price_ksh = prices,
+    total_reviews = reviews,
+    logistics_tags = logistics,
+    page = page_num
+  )
+}
+
+#looping through multiple pages
+scraping_10pages <-map_df(1:10, scrape_page)
+
 #example_2
 #target page
 url_2 <- "https://www.jumia.co.ke/catalog/?q=smartphones"
