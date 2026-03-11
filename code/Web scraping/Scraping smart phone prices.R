@@ -1,12 +1,10 @@
-setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Web scraping")
-
 #load libraries
 library(dplyr) #data manipulation and transformation
 library(stringr) #string handling
 library(purrr) #functional programming and iteration
 library(rvest) #web scraping and HTML extraction
 
-#example_1
+#case 1: scrapping smartphones data from Kilimall eCommerce site
 #target page
 url <- "https://www.kilimall.co.ke/category/Top-Brands?id=100000646&form=category&page=1"
 
@@ -36,7 +34,7 @@ phones <- tibble(
   logistics_tags = logistics
 )
 
-#extracting data from multiple pages
+#scrapping multiple pages from kilimall site
 scrape_page <- function(page_num){
   url <-paste0("https://www.kilimall.co.ke/category/Top-Brands?id=100000646&form=category&page=",page_num)
   
@@ -68,7 +66,7 @@ scrape_page <- function(page_num){
 #looping through multiple pages
 scraping_10pages <-map_df(1:10, scrape_page)
 
-#example_2
+#case 2: scrapping smartphones data from Jumia eCommerce site
 #target page
 url_2 <- "https://www.jumia.co.ke/catalog/?q=smartphones"
 
@@ -101,7 +99,7 @@ phones_2<-tibble(
   total_reviews = total_reviews
 )
 
-# Extracting multiple pages example 2
+#scrapping multiple pages from Jumia eCommerce site
 scrape_page_1 <- function(page_num){
   url <-paste0("https://www.jumia.co.ke/catalog/?q=smartphones&page=",page_num)
   
