@@ -19,16 +19,13 @@ df <- tables[[1]]%>%select(-Notes)#drops column on Notes
 lapply(df,head) #inspecting the data
 
 #convert Population from character to numeric
-
+df$Population <-as.numeric(gsub(",","",df$Population))
 
 #convert %ofworld from character to percent
-
-
-#create a pipeline that automatically detects percent and converts them
-
+df$`% ofworld` <- as.numeric(gsub("%","",df$`% ofworld`))/100
 
 #convert date from character to a date
-
+df$Date <- as.Date(df$Date, format = "%d %b %Y")
 
 #export  sample data as a CSV
 
