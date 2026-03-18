@@ -25,8 +25,14 @@ df$Population <-as.numeric(gsub(",","",df$Population))
 df$`% ofworld` <- as.numeric(gsub("%","",df$`% ofworld`))/100
 
 #convert date from character to a date
-df$Date <- as.Date(df$Date,format = "%d %b %Y")
+df$Date <- ifelse(
+  grepl("^\\d{4}$", df$Date),
+  paste0("01 Jan ", df$Date),
+  df$Date
+)%>%
+  str_replace_all("Sep","Sept")%>%
+  str_replace_all("31 Feb", "28 Feb")%>%
+  as.Date(df$Date,format = "%d %b %Y")
 
 #export  sample data as a CSV
 write.csv(df, "Population_data.csv", row.names = FALSE)
-
