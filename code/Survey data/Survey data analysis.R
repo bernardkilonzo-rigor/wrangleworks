@@ -7,6 +7,7 @@ library(survey) #core survey analysis
 library(skimr) #for quick data summaries
 library(labelled) #for variable labels
 library(naniar) #for manipulating missing data
+library(gt)
 
 #load data set
 survey_data <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/refs/heads/main/data/Survey_Data_Raw.csv")%>%
@@ -40,37 +41,43 @@ survey_data <- survey_data%>%
 
 #computing frequency tables (tidyverse + janitor)
 #gender frequency
-survey_data%>%
+gf<- survey_data%>%
   tabyl(gender)%>%
   adorn_pct_formatting()%>% #add percentages
-  adorn_totals("row") #add total
+  adorn_totals("row")%>% #add total
+  gt()
 
 #age_group frequency
 survey_data%>%
   tabyl(age_group)%>%
   adorn_pct_formatting()%>% #add percentages
-  adorn_totals("row") #add total
+  adorn_totals("row")%>% #add total
+  gt()
 
 #qualifications frequency
 survey_data%>%
   tabyl(highest_qualifications)%>%
   adorn_pct_formatting()%>% #add percentages
-  adorn_totals("row") #add total
+  adorn_totals("row")%>% #add total
+  gt()
 
 #employment frequency
 survey_data%>%
   tabyl(employment_status)%>%
   adorn_pct_formatting()%>% #add percentages
-  adorn_totals("row") #add total
+  adorn_totals("row")%>% #add total
+  gt()
 
 #income level frequency
 survey_data%>%
   tabyl(income_level)%>%
   adorn_pct_formatting()%>% #add percentages
-  adorn_totals("row") #add total
+  adorn_totals("row")%>% #add total
+  gt()
 
 #country frequency
 survey_data%>%
   tabyl(country)%>%
   adorn_pct_formatting()%>% #add percentages
-  adorn_totals("row") #add total
+  adorn_totals("row")%>% #add total
+  gt()
