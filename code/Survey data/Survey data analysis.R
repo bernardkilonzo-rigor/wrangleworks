@@ -38,5 +38,39 @@ survey_data <- survey_data%>%
 
 #exploratory data analysis (EDA)
 
+#computing frequency tables (tidyverse + janitor)
+#gender frequency
+survey_data%>%
+  tabyl(gender)%>%
+  adorn_pct_formatting()%>% #add percentages
+  adorn_totals("row") #add total
 
-#
+#age_group frequency
+survey_data%>%
+  tabyl(age_group)%>%
+  adorn_pct_formatting()%>% #add percentages
+  adorn_totals("row") #add total
+
+#qualifications frequency
+survey_data%>%
+  tabyl(highest_qualifications)%>%
+  adorn_pct_formatting()%>% #add percentages
+  adorn_totals("row") #add total
+
+#employment frequency
+survey_data%>%
+  tabyl(employment_status)%>%
+  adorn_pct_formatting()%>% #add percentages
+  adorn_totals("row") #add total
+
+#income level frequency
+survey_data%>%
+  tabyl(income_level)%>%
+  adorn_pct_formatting()%>% #add percentages
+  adorn_totals("row") #add total
+
+#country frequency
+survey_data%>%
+  tabyl(country)%>%
+  adorn_pct_formatting()%>% #add percentages
+  adorn_totals("row") #add total
