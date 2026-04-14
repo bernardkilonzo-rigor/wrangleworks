@@ -81,3 +81,17 @@ survey_data%>%
   adorn_pct_formatting()%>% #add percentages
   adorn_totals("row")%>% #add total
   gt()
+
+#cross-tab analysis
+var_to_tab <-c("q3a","q3b","q3c","q3d","q3e")
+
+crosstabs <- var_to_tab %>%
+  map(~ survey_data %>%
+    tabyl(gender, !!sym(.x))%>%
+    adorn_totals(c("row", "col"))%>%
+    adorn_percentages("row")%>%
+    adorn_pct_formatting(digits = 1)
+    )
+
+names(crosstabs)<- var_to_tab
+crosstabs
