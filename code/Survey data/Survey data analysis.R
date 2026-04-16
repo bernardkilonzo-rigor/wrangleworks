@@ -41,17 +41,29 @@ survey_data <- survey_data%>%
 
 #computing frequency tables (tidyverse + janitor)
 #gender frequency
-gf<- survey_data%>%
+survey_data%>%
   tabyl(gender)%>%
-  adorn_pct_formatting()%>% #add percentages
+  arrange(desc(n))%>% #sorting before totals
   adorn_totals("row")%>% #add total
+  adorn_pct_formatting()%>% #add percentages
+  rename(
+    Gender = gender,
+    Count = n,
+    Percent = percent
+  )%>%
   gt()
 
 #age_group frequency
 survey_data%>%
   tabyl(age_group)%>%
-  adorn_pct_formatting()%>% #add percentages
+  arrange(desc(n))%>% #sorting before totals
   adorn_totals("row")%>% #add total
+  adorn_pct_formatting()%>% #add percentages
+  rename(
+    "Age Group" = age_group,
+    Count = n,
+    Percent = percent
+  )%>%
   gt()
 
 #qualifications frequency
