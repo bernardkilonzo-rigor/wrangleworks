@@ -119,6 +119,7 @@ survey_data%>%
   gt()
 
 #computing frequency tables (dplyr)
+#gender frequency table
 survey_data%>%
   group_by(gender)%>%
   summarise(Count = n())%>% #compute frequency
@@ -132,6 +133,91 @@ survey_data%>%
   mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
   rename(
     Gender = gender
+  )%>%
+  gt()
+
+#age_group frequency table
+survey_data%>%
+  group_by(age_group)%>%
+  summarise(Count = n())%>% #compute frequency
+  mutate(Percent = Count/sum(Count))%>% #compute percentages
+  arrange(desc(Count))%>% #sort in descending
+  add_row(
+    age_group = "Total",
+    Count = sum(.$Count),
+    Percent = 1
+  )%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  rename(
+    "Age Group" = age_group
+  )%>%
+  gt()
+
+#qualifications frequency table
+survey_data%>%
+  group_by(highest_qualifications)%>%
+  summarise(Count = n())%>% #compute frequency
+  mutate(Percent = Count/sum(Count))%>% #compute percentages
+  arrange(desc(Count))%>% #sort in descending
+  add_row(
+    highest_qualifications = "Total",
+    Count = sum(.$Count),
+    Percent = 1
+  )%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  rename(
+    "Highest Qualifications" = highest_qualifications
+  )%>%
+  gt()
+
+#employment frequency table
+survey_data%>%
+  group_by(employment_status)%>%
+  summarise(Count = n())%>% #compute frequency
+  mutate(Percent = Count/sum(Count))%>% #compute percentages
+  arrange(desc(Count))%>% #sort in descending
+  add_row(
+    employment_status = "Total",
+    Count = sum(.$Count),
+    Percent = 1
+  )%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  rename(
+    "Employment Status" = employment_status
+  )%>%
+  gt()
+
+#income level frequency table
+survey_data%>%
+  group_by(income_level)%>%
+  summarise(Count = n())%>% #compute frequency
+  mutate(Percent = Count/sum(Count))%>% #compute percentages
+  arrange(desc(Count))%>% #sort in descending
+  add_row(
+    income_level = "Total",
+    Count = sum(.$Count),
+    Percent = 1
+  )%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  rename(
+    "Income Level" = income_level
+  )%>%
+  gt()
+
+#country frequency table
+survey_data%>%
+  group_by(country)%>%
+  summarise(Count = n())%>% #compute frequency
+  mutate(Percent = Count/sum(Count))%>% #compute percentages
+  arrange(desc(Count))%>% #sort in descending
+  add_row(
+    country = "Total",
+    Count = sum(.$Count),
+    Percent = 1
+  )%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  rename(
+    Country = country
   )%>%
   gt()
 
