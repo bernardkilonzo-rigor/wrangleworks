@@ -69,29 +69,53 @@ survey_data%>%
 #qualifications frequency
 survey_data%>%
   tabyl(highest_qualifications)%>%
-  adorn_pct_formatting()%>% #add percentages
+  arrange(desc(n))%>% #sorting before totals
   adorn_totals("row")%>% #add total
+  adorn_pct_formatting()%>% #add percentages
+  rename(
+    "Highest Qualifications" = highest_qualifications,
+    Count = n,
+    Percent = percent
+  )%>%
   gt()
 
 #employment frequency
 survey_data%>%
   tabyl(employment_status)%>%
-  adorn_pct_formatting()%>% #add percentages
+  arrange(desc(n))%>% #sorting before totals
   adorn_totals("row")%>% #add total
+  adorn_pct_formatting()%>% #add percentages
+  rename(
+    "Employment Status" = employment_status,
+    Count = n,
+    Percent = percent
+  )%>%
   gt()
 
 #income level frequency
 survey_data%>%
   tabyl(income_level)%>%
-  adorn_pct_formatting()%>% #add percentages
+  arrange(desc(n))%>% #sorting before totals
   adorn_totals("row")%>% #add total
+  adorn_pct_formatting()%>% #add percentages
+  rename(
+    "Income Level" = income_level,
+    Count = n,
+    Percent = percent
+  )%>%
   gt()
 
 #country frequency
 survey_data%>%
   tabyl(country)%>%
-  adorn_pct_formatting()%>% #add percentages
+  arrange(desc(n))%>% #sorting before totals
   adorn_totals("row")%>% #add total
+  adorn_pct_formatting()%>% #add percentages
+  rename(
+    Country = country,
+    Count = n,
+    Percent = percent
+  )%>%
   gt()
 
 #cross-tab analysis
