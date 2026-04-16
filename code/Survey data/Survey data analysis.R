@@ -118,6 +118,23 @@ survey_data%>%
   )%>%
   gt()
 
+#computing frequency tables (dplyr)
+survey_data%>%
+  group_by(gender)%>%
+  summarise(Count = n())%>% #compute frequency
+  mutate(Percent = Count/sum(Count))%>% #compute percentages
+  arrange(desc(Count))%>% #sort in descending
+  add_row(
+    gender = "Total",
+    Count = sum(.$Count),
+    Percent = 1
+  )%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  rename(
+    Gender = gender
+  )%>%
+  gt()
+
 #cross-tab analysis
 var_to_tab <-c("q3a","q3b","q3c","q3d","q3e")
 
