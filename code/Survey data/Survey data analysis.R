@@ -234,3 +234,10 @@ crosstabs <- var_to_tab %>%
 
 names(crosstabs)<- var_to_tab
 crosstabs
+
+#dealing with multiple response questions
+#converting wide to long data format
+dat_long<- survey_data%>%
+  select(respondent_s_id,q5_1:q5_6)%>%
+  pivot_longer(q5_1:q5_6, names_to = "Quiz", values_to = "Response")
+
