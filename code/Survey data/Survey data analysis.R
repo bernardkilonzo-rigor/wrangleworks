@@ -236,6 +236,7 @@ names(crosstabs)<- var_to_tab
 crosstabs
 
 #dealing with multiple response questions
+#using dplyr package
 #converting wide to long data format
 dat_long<- survey_data%>%
   select(respondent_s_id,q5_1:q5_6)%>%
@@ -259,4 +260,21 @@ dat_long%>%
   )%>%
   mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
   gt()
- 
+
+#using janitor
+dat_long %>%
+  filter(Response != "")%>%
+  tabyl(Response)%>%
+  arrange(desc(n))%>%
+  bind_rows(
+    tibble(
+      Response = "Total", n = total_unique
+    )
+  )%>%
+  mutate(percent = n/total_unique)%>%
+  mutate(percent = scales::percent(percent, accuracy =0.1))%>%
+  rename(
+    Count = n,
+    Percent = percent
+  )%>%
+  gt()
