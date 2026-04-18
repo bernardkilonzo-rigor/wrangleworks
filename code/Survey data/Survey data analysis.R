@@ -241,16 +241,20 @@ dat_long<- survey_data%>%
   select(respondent_s_id,q5_1:q5_6)%>%
   pivot_longer(q5_1:q5_6, names_to = "Quiz", values_to = "Response")
 
+total_unique <- dat_long %>%
+  filter(Response != "") %>%
+  summarise(Total = n_distinct(respondent_s_id)) %>%
+  pull(Total)
 
 dat_long%>%
   filter(Response != "")%>%
   group_by(Response)%>%
   summarise(Count = n_distinct(respondent_s_id))%>%
-  mutate(Percent = Count/sum(Count))%>%
+  mutate(Percent = Count/total_unique)%>%
   arrange(desc(Count))%>%
   add_row(
     Response = "Total",
-    Count = sum(.$Count),
+    Count = total_unique,
     Percent = 1
   )%>%
   mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
