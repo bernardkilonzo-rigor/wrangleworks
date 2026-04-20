@@ -222,18 +222,25 @@ survey_data%>%
   gt()
 
 #cross-tab analysis
-var_to_tab <-c("q3a","q3b","q3c","q3d","q3e")
+#a simple cross tab analysis
+#using janitor
+survey_data%>%
+  tabyl(gender,q3a)%>%
+  adorn_percentages()%>%
+  adorn_pct_formatting()%>%
+  rename(
+    Gender = gender
+  )
 
-crosstabs <- var_to_tab %>%
-  map(~ survey_data %>%
-    tabyl(gender, !!sym(.x))%>%
-    adorn_totals(c("row", "col"))%>%
-    adorn_percentages("row")%>%
-    adorn_pct_formatting(digits = 1)
-    )
-
-names(crosstabs)<- var_to_tab
-crosstabs
+#using dplyr
+survey_data%>%
+  count(gender, q3a)%>%
+  group_by(gender)%>%
+  mutate(
+    pct = n/sum(n)
+  )%>%
+  mutate(pct = scales::percent(pct, accuracy =0.1))
+  ungroup()
 
 #dealing with multiple response questions
 #using dplyr package
@@ -278,3 +285,4 @@ dat_long %>%
     Percent = percent
   )%>%
   gt()
+
