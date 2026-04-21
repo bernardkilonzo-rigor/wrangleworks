@@ -224,13 +224,28 @@ survey_data%>%
 #cross-tab analysis
 #a simple cross tab analysis
 #using janitor
+#computing count
+survey_data%>%
+  tabyl(gender,q3a)%>%
+  rename(
+    Gender = gender
+  )%>%gt()
+
+#computing percentages
 survey_data%>%
   tabyl(gender,q3a)%>%
   adorn_percentages()%>%
   adorn_pct_formatting()%>%
   rename(
     Gender = gender
-  )
+  )%>%gt()
+
+#pivoting q3a:q3e (cross tab to columnar format)
+dat_long_q3<- survey_data%>%
+  select(respondent_s_id,gender,age_group,highest_qualifications,
+         employment_status,income_level,country,q3a:q3e)%>%
+  pivot_longer(q3a:q3e, names_to = "Quiz", values_to = "Ratings")
+
 
 #using dplyr
 survey_data%>%
@@ -239,10 +254,9 @@ survey_data%>%
   mutate(
     pct = n/sum(n)
   )%>%
-  mutate(pct = scales::percent(pct, accuracy =0.1))
-  ungroup()
+  mutate(pct = scales::percent(pct, accuracy =0.1))%>%gt()
 
-#dealing with multiple response questions
+  #dealing with multiple response questions
 #using dplyr package
 #converting wide to long data format
 dat_long<- survey_data%>%
