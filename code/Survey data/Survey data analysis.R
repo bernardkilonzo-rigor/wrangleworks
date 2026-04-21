@@ -246,6 +246,18 @@ dat_long_q3<- survey_data%>%
          employment_status,income_level,country,q3a:q3e)%>%
   pivot_longer(q3a:q3e, names_to = "Quiz", values_to = "Ratings")
 
+#analyzing rating scale (q3)
+#computing count
+dat_long_q3%>%
+  tabyl(Quiz, Ratings)%>%
+  gt()
+
+#computing percentages
+dat_long_q3%>%
+  tabyl(Quiz, Ratings)%>%
+  adorn_percentages()%>%
+  adorn_pct_formatting()%>%
+  gt()
 
 #using dplyr
 survey_data%>%
