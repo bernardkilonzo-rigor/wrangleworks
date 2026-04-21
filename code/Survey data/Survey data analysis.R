@@ -240,6 +240,15 @@ survey_data%>%
     Gender = gender
   )%>%gt()
 
+#using dplyr
+survey_data%>%
+  count(gender, q3a)%>%
+  group_by(gender)%>%
+  mutate(
+    pct = n/sum(n)
+  )%>%
+  mutate(pct = scales::percent(pct, accuracy =0.1))
+
 #pivoting q3a:q3e (cross tab to columnar format)
 dat_long_q3<- survey_data%>%
   select(respondent_s_id,gender,age_group,highest_qualifications,
@@ -259,16 +268,26 @@ dat_long_q3%>%
   adorn_pct_formatting()%>%
   gt()
 
-#using dplyr
-survey_data%>%
-  count(gender, q3a)%>%
-  group_by(gender)%>%
-  mutate(
-    pct = n/sum(n)
-  )%>%
-  mutate(pct = scales::percent(pct, accuracy =0.1))%>%gt()
+#pivoting q4a:q4g (cross tab to columnar format)
+dat_long_q4<- survey_data%>%
+  select(respondent_s_id,gender,age_group,highest_qualifications,
+         employment_status,income_level,country,q4a:q4g)%>%
+  pivot_longer(q4a:q4g, names_to = "Quiz", values_to = "Ratings")
 
-  #dealing with multiple response questions
+#analyzing rating scale (q4)
+#computing count
+dat_long_q4%>%
+  tabyl(Quiz, Ratings)%>%
+  gt()
+
+#computing percentages
+dat_long_q4%>%
+  tabyl(Quiz, Ratings)%>%
+  adorn_percentages()%>%
+  adorn_pct_formatting()%>%
+  gt()
+
+#dealing with multiple response questions
 #using dplyr package
 #converting wide to long data format
 dat_long<- survey_data%>%
