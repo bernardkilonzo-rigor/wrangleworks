@@ -287,6 +287,25 @@ dat_long_q4%>%
   adorn_pct_formatting()%>%
   gt()
 
+#analyzing YES/NO questions
+#pivoting q2a:q2e (cross tab to columnar format)
+dat_long_q2<- survey_data%>%
+  select(respondent_s_id,gender,age_group,highest_qualifications,
+         employment_status,income_level,country,q2a:q2e)%>%
+  pivot_longer(q2a:q2e, names_to = "Quiz", values_to = "Response")
+
+#computing count
+dat_long_q2%>%
+  tabyl(Quiz, Response)%>%
+  gt()
+
+#computing percent
+dat_long_q2%>%
+  tabyl(Quiz, Response)%>%
+  adorn_percentages()%>%
+  adorn_pct_formatting()%>%
+  gt()
+
 #dealing with multiple response questions
 #using dplyr package
 #converting wide to long data format
