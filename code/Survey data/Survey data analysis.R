@@ -306,6 +306,37 @@ dat_long_q2%>%
   adorn_pct_formatting()%>%
   gt()
 
+#single response questions
+#using janitor
+survey_data%>%
+  tabyl(q1)%>%
+  arrange(desc(n))%>% #sorting before totals
+  adorn_totals("row")%>% #add total
+  adorn_pct_formatting()%>% #add percentages
+  rename(
+    "Info Source" = q1,
+    Count = n,
+    Percent = percent
+  )%>%
+  gt()
+
+#using dplyr
+survey_data%>%
+  group_by(q1)%>%
+  summarise(Count = n())%>% #compute frequency
+  mutate(Percent = Count/sum(Count))%>% #compute percentages
+  arrange(desc(Count))%>% #sort in descending
+  add_row(
+    q1 = "Total",
+    Count = sum(.$Count),
+    Percent = 1
+  )%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  rename(
+    "Info Source" = q1
+  )%>%
+  gt()
+
 #dealing with multiple response questions
 #using dplyr package
 #converting wide to long data format
