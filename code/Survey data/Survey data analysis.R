@@ -381,3 +381,24 @@ dat_long %>%
   )%>%
   gt()
 
+#computing Net Promoters Score (NPS)
+#converting wide to long data format (pivoting q6a to q6e)
+dat_long_q6<- survey_data%>%
+  select(respondent_s_id,gender,age_group,highest_qualifications,
+         employment_status,income_level,country,q6a:q6e)%>%
+  pivot_longer(q6a:q6e, names_to = "Quiz", values_to = "Rating")
+
+#computing net promoters score (NPS) using janitor
+dat_long_q6%>%
+  mutate(
+    nps_group = 
+      case_when(
+        Rating >= 9 ~ "Promoters",
+        Rating >= 7 ~ "Passive",
+        TRUE ~ "Detractors"
+      )
+  )%>%
+  tabyl(Quiz,nps_group)%>%
+  adorn_percentages()%>%
+  adorn_pct_formatting()%>%
+  gt()
