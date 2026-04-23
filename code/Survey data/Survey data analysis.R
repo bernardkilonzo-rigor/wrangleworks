@@ -402,3 +402,24 @@ dat_long_q6%>%
   adorn_percentages()%>%
   adorn_pct_formatting()%>%
   gt()
+
+#computing Net Promoters Score (NPS) with dplyr
+dat_long_q6%>%
+  mutate(
+    nps_group = 
+      case_when(
+        Rating >= 9 ~ "Promoters",
+        Rating >= 7 ~ "Passive",
+        TRUE ~ "Detractors"
+      )
+  )%>%
+  group_by(Quiz, nps_group)%>%
+  summarise(Count = n_distinct(respondent_s_id),
+            .groups = "drop")%>%
+  mutate(Percent = Count/sum(Count))%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  select(Quiz, nps_group, Percent)%>%
+  pivot_wider(
+    names_from = nps_group,
+    values_from = Percent
+  )%>%gt()
