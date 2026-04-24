@@ -267,6 +267,18 @@ dat_long_q3%>%
   adorn_pct_formatting()%>%
   gt()
 
+#computing percentages (dplyr)
+dat_long_q3%>%
+  group_by(Quiz, Ratings)%>%
+  summarise(Count = n_distinct(respondent_s_id))%>%
+  mutate(Percent = Count/sum(Count))%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  select(Quiz, Ratings, Percent)%>%
+  pivot_wider(
+    names_from = Ratings,
+    values_from = Percent
+  )
+
 #analyzing rating scale (q4)
 #pivoting q4a:q4g (cross tab to columnar format)
 dat_long_q4<- survey_data%>%
@@ -274,17 +286,29 @@ dat_long_q4<- survey_data%>%
          employment_status,income_level,country,q4a:q4g)%>%
   pivot_longer(q4a:q4g, names_to = "Quiz", values_to = "Ratings")
 
-#computing count
+#computing count (janitor)
 dat_long_q4%>%
   tabyl(Quiz, Ratings)%>%
   gt()
 
-#computing percentages
+#computing percentages (janitor)
 dat_long_q4%>%
   tabyl(Quiz, Ratings)%>%
   adorn_percentages()%>%
   adorn_pct_formatting()%>%
   gt()
+
+#computing percentages (dplyr)
+dat_long_q4%>%
+  group_by(Quiz, Ratings)%>%
+  summarise(Count = n_distinct(respondent_s_id))%>%
+  mutate(Percent = Count/sum(Count))%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  select(Quiz, Ratings, Percent)%>%
+  pivot_wider(
+    names_from = Ratings,
+    values_from = Percent
+  )
 
 #ANALYZING YES/NO QUESTIONS
 #pivoting q2a:q2e (cross tab to columnar format)
