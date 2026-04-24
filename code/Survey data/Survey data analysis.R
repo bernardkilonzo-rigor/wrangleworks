@@ -7,11 +7,11 @@ library(survey) #core survey analysis
 library(skimr) #for quick data summaries
 library(labelled) #for variable labels
 library(naniar) #for manipulating missing data
-library(gt)
+library(gt) #for creating publication quality tables
 
-#load data set
+#load data
 survey_data <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/refs/heads/main/data/Survey_Data_Raw.csv")%>%
-  clean_names() #converts names to snake case.
+  clean_names() #converts names to snake case (spaces are replaced with underscore).
 
 #inspecting data structure
 glimpse(survey_data)
@@ -24,8 +24,7 @@ gg_miss_var(survey_data)
 gg_miss_case(survey_data)
 
 #cleaning and preparing variables
-#recode numeric likert values to  text labels
-
+#recording numeric Likert values to text labels
 likert_labels <- c(
   `1` = "Highly dissatisfied",
   `2` = "Dissatisfied",
@@ -37,8 +36,7 @@ likert_labels <- c(
 survey_data <- survey_data%>%
   mutate(across(q3a:q4g, ~recode(.x, !!!likert_labels)))
 
-#exploratory data analysis (EDA)
-
+#EXPLORATORY DATA ANALYSIS (EDA)
 #computing frequency tables (tidyverse + janitor)
 #gender frequency
 survey_data%>%
@@ -221,10 +219,9 @@ survey_data%>%
   )%>%
   gt()
 
-#cross-tab analysis
+#CROSS TAB ANALYSIS
 #a simple cross tab analysis
-#using janitor
-#computing count
+#computing count (janitor)
 survey_data%>%
   tabyl(gender,q3a)%>%
   rename(
@@ -240,41 +237,43 @@ survey_data%>%
     Gender = gender
   )%>%gt()
 
-#using dplyr
+#computing percentages using dplyr
 survey_data%>%
-  count(gender, q3a)%>%
-  group_by(gender)%>%
-  mutate(
-    pct = n/sum(n)
-  )%>%
-  mutate(pct = scales::percent(pct, accuracy =0.1))
+  group_by(gender, q3a)%>%
+  summarise(Count = n_distinct(respondent_s_id))%>%
+  mutate(Percent = Count/sum(Count))%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  select(gender,q3a,Percent)%>%
+  pivot_wider(
+    names_from = q3a, values_from = Percent
+  )
 
+#analyzing rating scale (q3)
 #pivoting q3a:q3e (cross tab to columnar format)
 dat_long_q3<- survey_data%>%
   select(respondent_s_id,gender,age_group,highest_qualifications,
          employment_status,income_level,country,q3a:q3e)%>%
   pivot_longer(q3a:q3e, names_to = "Quiz", values_to = "Ratings")
 
-#analyzing rating scale (q3)
-#computing count
+#computing count (janitor)
 dat_long_q3%>%
   tabyl(Quiz, Ratings)%>%
   gt()
 
-#computing percentages
+#computing percentages (janitor)
 dat_long_q3%>%
   tabyl(Quiz, Ratings)%>%
   adorn_percentages()%>%
   adorn_pct_formatting()%>%
   gt()
 
+#analyzing rating scale (q4)
 #pivoting q4a:q4g (cross tab to columnar format)
 dat_long_q4<- survey_data%>%
   select(respondent_s_id,gender,age_group,highest_qualifications,
          employment_status,income_level,country,q4a:q4g)%>%
   pivot_longer(q4a:q4g, names_to = "Quiz", values_to = "Ratings")
 
-#analyzing rating scale (q4)
 #computing count
 dat_long_q4%>%
   tabyl(Quiz, Ratings)%>%
@@ -287,7 +286,7 @@ dat_long_q4%>%
   adorn_pct_formatting()%>%
   gt()
 
-#analyzing YES/NO questions
+#ANALYZING YES/NO QUESTIONS
 #pivoting q2a:q2e (cross tab to columnar format)
 dat_long_q2<- survey_data%>%
   select(respondent_s_id,gender,age_group,highest_qualifications,
