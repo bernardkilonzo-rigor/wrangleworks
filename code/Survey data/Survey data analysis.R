@@ -301,7 +301,8 @@ dat_long_q4%>%
 #computing percentages (dplyr)
 dat_long_q4%>%
   group_by(Quiz, Ratings)%>%
-  summarise(Count = n_distinct(respondent_s_id))%>%
+  summarise(Count = n_distinct(respondent_s_id),
+            .groups = "drop_last")%>%
   mutate(Percent = Count/sum(Count))%>%
   mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
   select(Quiz, Ratings, Percent)%>%
@@ -317,19 +318,31 @@ dat_long_q2<- survey_data%>%
          employment_status,income_level,country,q2a:q2e)%>%
   pivot_longer(q2a:q2e, names_to = "Quiz", values_to = "Response")
 
-#computing count
+#computing count (janitor)
 dat_long_q2%>%
   tabyl(Quiz, Response)%>%
   gt()
 
-#computing percent
+#computing percent (janitor)
 dat_long_q2%>%
   tabyl(Quiz, Response)%>%
   adorn_percentages()%>%
   adorn_pct_formatting()%>%
   gt()
 
-#single response questions
+#computing percent (using dplyr)
+dat_long_q2%>%
+  group_by(Quiz, Response)%>%
+  summarise(Count = n_distinct(respondent_s_id))%>%
+  mutate(Percent = Count/sum(Count))%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  select(Quiz, Response, Percent)%>%
+  pivot_wider(
+    names_from = Response,
+    values_from = Percent
+  )
+
+#ANALYZING SINGLE RESPONSE QUESTIONS
 #using janitor
 survey_data%>%
   tabyl(q1)%>%
