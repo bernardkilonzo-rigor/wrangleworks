@@ -373,13 +373,13 @@ survey_data%>%
   )%>%
   gt()
 
-#dealing with multiple response questions
-#using dplyr package
+#DEALING WITH MULTIPLE RESPONSE QUESTIONS
 #converting wide to long data format
 dat_long<- survey_data%>%
   select(respondent_s_id,q5_1:q5_6)%>%
   pivot_longer(q5_1:q5_6, names_to = "Quiz", values_to = "Response")
 
+#using dplyr package
 total_unique <- dat_long %>%
   filter(Response != "") %>%
   summarise(Total = n_distinct(respondent_s_id)) %>%
@@ -417,8 +417,8 @@ dat_long %>%
   )%>%
   gt()
 
-#computing Net Promoters Score (NPS)
-#converting wide to long data format (pivoting q6a to q6e)
+#COMPUTING NET PROMOTERS SCORE (NPS)
+#converting wide to long format (pivoting q6a to q6e)
 dat_long_q6<- survey_data%>%
   select(respondent_s_id,gender,age_group,highest_qualifications,
          employment_status,income_level,country,q6a:q6e)%>%
@@ -450,12 +450,11 @@ dat_long_q6%>%
       )
   )%>%
   group_by(Quiz, nps_group)%>%
-  summarise(Count = n_distinct(respondent_s_id),
-            .groups = "drop")%>%
+  summarise(Count = n_distinct(respondent_s_id))%>%
   mutate(Percent = Count/sum(Count))%>%
   mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
   select(Quiz, nps_group, Percent)%>%
   pivot_wider(
     names_from = nps_group,
     values_from = Percent
-  )%>%gt()
+  )
