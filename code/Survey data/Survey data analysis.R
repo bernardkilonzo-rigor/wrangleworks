@@ -8,6 +8,7 @@ library(skimr) #for quick data summaries
 library(labelled) #for variable labels
 library(naniar) #for manipulating missing data
 library(gt) #for creating publication quality tables
+library(flextable) #for creating tables for reporting & publications
 
 #load data
 survey_data <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/refs/heads/main/data/Survey_Data_Raw.csv")%>%
@@ -238,15 +239,18 @@ survey_data%>%
   )%>%gt()
 
 #computing percentages using dplyr
-survey_data%>%
+tab_q3a<-survey_data%>%
   group_by(gender, q3a)%>%
-  summarise(Count = n_distinct(respondent_s_id))%>%
+  summarise(Count = n_distinct(respondent_s_id),
+            .groups = "drop_last")%>%
   mutate(Percent = Count/sum(Count))%>%
   mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
   select(gender,q3a,Percent)%>%
   pivot_wider(
     names_from = q3a, values_from = Percent
   )
+
+flextable(tab_q3a)
 
 #analyzing rating scale (q3)
 #pivoting q3a:q3e (cross tab to columnar format)
@@ -299,7 +303,7 @@ dat_long_q4%>%
   gt()
 
 #computing percentages (dplyr)
-dat_long_q4%>%
+tab_q4<-dat_long_q4%>%
   group_by(Quiz, Ratings)%>%
   summarise(Count = n_distinct(respondent_s_id),
             .groups = "drop_last")%>%
@@ -310,6 +314,8 @@ dat_long_q4%>%
     names_from = Ratings,
     values_from = Percent
   )
+
+flextable(tab_q4)
 
 #ANALYZING YES/NO QUESTIONS
 #pivoting q2a:q2e (cross tab to columnar format)
@@ -331,7 +337,7 @@ dat_long_q2%>%
   gt()
 
 #computing percent (using dplyr)
-dat_long_q2%>%
+tab_q2<- dat_long_q2%>%
   group_by(Quiz, Response)%>%
   summarise(Count = n_distinct(respondent_s_id))%>%
   mutate(Percent = Count/sum(Count))%>%
@@ -341,6 +347,8 @@ dat_long_q2%>%
     names_from = Response,
     values_from = Percent
   )
+
+flextable(tab_q2)
 
 #ANALYZING SINGLE RESPONSE QUESTIONS
 #using janitor
@@ -440,7 +448,7 @@ dat_long_q6%>%
   gt()
 
 #computing Net Promoters Score (NPS) with dplyr
-dat_long_q6%>%
+tab_q6<- dat_long_q6%>%
   mutate(
     nps_group = 
       case_when(
@@ -458,3 +466,5 @@ dat_long_q6%>%
     names_from = nps_group,
     values_from = Percent
   )
+
+flextable(tab_q6)
