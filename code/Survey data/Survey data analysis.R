@@ -252,6 +252,18 @@ tab_q3a<-survey_data%>%
 
 flextable(tab_q3a)
 
+#alternative using ungroup()
+survey_data%>%
+  group_by(gender, q3a)%>%
+  summarise(Count = n_distinct(respondent_s_id))%>%
+  mutate(Percent = Count/sum(Count))%>%
+  ungroup()%>%
+  mutate(Percent = scales::percent(Percent, accuracy =0.1))%>%
+  select(gender,q3a,Percent)%>%
+  pivot_wider(
+    names_from = q3a, values_from = Percent
+  )%>%gt()
+
 #analyzing rating scale (q3)
 #pivoting q3a:q3e (cross tab to columnar format)
 dat_long_q3<- survey_data%>%
