@@ -2,6 +2,7 @@ setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Data
 #load libraries
 library(tidyverse)
 library(janitor)
+library(data.table)
 
 #load data sets
 superstore <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")%>%
@@ -9,7 +10,7 @@ superstore <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/d
 Financial_data <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/refs/heads/main/data/Financial%20Data.csv", check.names = FALSE)
 
 #shaping data
-#pivot longer
+#1. pivot longer
 Financial_data_longpvt <- Financial_data%>%
   pivot_longer(cols = "01/01/2024":"01/12/2025", names_to = "Date", values_to = "Values")
 
@@ -17,4 +18,15 @@ Financial_data_longpvt <- Financial_data%>%
 Financial_data_log <- Financial_data%>%
   pivot_longer(cols = contains("/"), names_to = "Date", values_to = "Value")
 
+#2. pivot wider
+# using dplyr package
+Financial_wider <- Financial_data_log%>%
+  pivot_wider(names_from = Date, values_from = Value)
 
+# using data.table  (best for large data sets)
+dt <- as.data.table(Financial_data_log)
+dt_wide <- dcast(
+  dt,
+  `Indicator Name` ~ Date,
+  value.var = "Value"
+)
