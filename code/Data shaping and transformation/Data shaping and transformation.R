@@ -18,6 +18,16 @@ Financial_data_longpvt <- Financial_data%>%
 Financial_data_log <- Financial_data%>%
   pivot_longer(cols = contains("/"), names_to = "Date", values_to = "Value")
 
+# using data.table (best for larger data sets)
+dt_wd <- as.data.table(Finacial_data)
+dt_long <- dt_wd %>%
+  melt(
+  id.vars = "Indicator Name",
+  measure.vars = c("01/01/2024","01/12/2025"),
+  variable.name = "Date",
+  value.name = "Value"
+)
+
 #2. pivot wider
 # using dplyr package
 Financial_wider <- Financial_data_log%>%
