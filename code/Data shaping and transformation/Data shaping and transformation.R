@@ -3,6 +3,7 @@ setwd("C:\\Users\\berna\\OneDrive\\Desktop\\Production\\wrangleworks\\code\\Data
 library(tidyverse)
 library(janitor)
 library(data.table)
+library(tidyr)
 
 #load data sets
 superstore <- read.csv("https://raw.githubusercontent.com/bernardkilonzo-rigor/dataviz/main/data/Sample%20-%20Superstore.csv")%>%
@@ -40,3 +41,15 @@ dt_wide <- dcast(
   `Indicator Name` ~ Date,
   value.var = "Value"
 )
+
+#transposing data (Financial_data above)
+dt_t <- Financial_data %>%
+  pivot_longer(
+    cols = -`Indicator Name`,
+    names_to = "Date",
+    values_to = "Value"
+  ) %>%
+  pivot_wider(
+    names_from = `Indicator Name`,
+    values_from = Value
+  )
