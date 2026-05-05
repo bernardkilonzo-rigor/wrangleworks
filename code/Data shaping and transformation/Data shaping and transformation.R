@@ -53,3 +53,11 @@ dt_t <- Financial_data %>%
     names_from = `Indicator Name`,
     values_from = Value
   )
+
+#separating a column into multiple columns using separate()
+superstore<-superstore%>%
+  separate(customer_name, into = c("First", "Last"), sep = " ", extra = "merge", remove = FALSE)
+
+#combining multiple columns into one using unite()
+superstore <- superstore%>%
+  unite("Customer", First, Last, sep = " ", remove = FALSE)
